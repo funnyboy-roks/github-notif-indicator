@@ -16,6 +16,9 @@ async fn main() {
 
     let octocrab = Octocrab::builder()
         .personal_token(token.trim())
+        .set_connect_timeout(Some(Duration::from_secs(1)))
+        .set_read_timeout(Some(Duration::from_secs(1)))
+        .set_write_timeout(Some(Duration::from_secs(1)))
         .build()
         .unwrap();
 
@@ -44,6 +47,6 @@ async fn main() {
         }
 
         let elapsed = start.elapsed();
-        tokio::time::sleep(interval - elapsed).await;
+        tokio::time::sleep(interval.saturating_sub(elapsed)).await;
     }
 }
