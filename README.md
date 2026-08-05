@@ -14,9 +14,7 @@ just a lot less configurable
 To install, you need to have rust and cargo installed
 
 ```sh
-git clone https://github.com/funnyboy-roks/github-notif-indicator.git
-cd github-notif-indicator
-cargo install --path .
+cargo install --git https://github.com/funnyboy-roks/github-notif-indicator.git
 ```
 
 ## Waybar
