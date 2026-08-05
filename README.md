@@ -9,6 +9,16 @@ just a lot less configurable
 [waybar]: https://github.com/Alexays/Waybar
 [native github module]: https://github.com/polybar/polybar/wiki/Module:-github
 
+## Install
+
+To install, you need to have rust and cargo installed
+
+```sh
+git clone https://github.com/funnyboy-roks/github-notif-indicator.git
+cd github-notif-indicator
+cargo install --path .
+```
+
 ## Waybar
 
 To use in way bar, install and then add following custom module:
