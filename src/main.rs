@@ -37,12 +37,11 @@ async fn main() {
                 if notifs == 0 {
                     println!();
                 } else {
-                    println!("❗ {}", notifs);
+                    println!(" {}", notifs);
                 }
             }
             Err(e) => {
                 eprintln!("{:?}", e);
-                println!("⮟");
             }
         }
 
