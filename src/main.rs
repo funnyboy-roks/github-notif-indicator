@@ -63,9 +63,12 @@ async fn main() {
     loop {
         let start = Instant::now();
 
+        const GITHUB_ICON: &str = "";
+        const CODEBERG_ICON: &str = " ";
+
         let github = github_notifs(&octocrab).await;
         if github > 0 {
-            print!(" {}", github);
+            print!("{} {}", GITHUB_ICON, github);
         }
 
         let codeberg = codeberg_notifs(&codeberg).await;
@@ -73,7 +76,7 @@ async fn main() {
             if github > 0 {
                 print!("  ");
             }
-            print!("  {}", codeberg);
+            print!("{} {}", CODEBERG_ICON, codeberg);
         }
 
         println!();
