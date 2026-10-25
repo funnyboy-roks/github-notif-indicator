@@ -15,18 +15,20 @@ pub async fn github_notifs(octocrab: &Octocrab) -> usize {
     {
         Ok(notifs) => notifs.into_stream(octocrab).count().await,
         Err(e) => {
-            eprintln!("{:?}", e);
+            eprintln!("{}", e);
             0
         }
     }
 }
 
 pub async fn codeberg_notifs(fj: &Forgejo) -> usize {
-    fj.notify_new_available()
-        .await
-        .unwrap()
-        .new
-        .unwrap_or_default() as _
+    match fj.notify_new_available().await {
+        Ok(res) => res.new.unwrap_or_default() as _,
+        Err(e) => {
+            eprintln!("{}", e);
+            0
+        }
+    }
 }
 
 #[tokio::main(flavor = "current_thread")]
