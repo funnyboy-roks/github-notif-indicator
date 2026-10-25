@@ -38,24 +38,25 @@ jobs:
       # https://twitter.com/jonhoo/status/1571290371124260865
       - name: cargo test --locked
         run: cargo test --locked --all-features --all-targets
-  os-check:
-    # run cargo test on mac and windows
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} / stable
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, windows-latest]
-    steps:
-      - uses: https://github.com/actions/checkout@v7
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: stable
-      - name: cargo generate-lockfile
-        if: hashFiles('Cargo.lock') == ''
-        run: cargo generate-lockfile
-      - name: cargo test
-        run: cargo test --locked --all-features --all-targets -- --skip ui
+  # Pretty hard to run other OSs atm
+  # os-check:
+  #   # run cargo test on mac and windows
+  #   runs-on: ${{ matrix.os }}
+  #   name: ${{ matrix.os }} / stable
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       os: [macos-latest, windows-latest]
+  #   steps:
+  #     - uses: https://github.com/actions/checkout@v7
+  #       with:
+  #         submodules: true
+  #     - name: Install stable
+  #       uses: dtolnay/rust-toolchain@master
+  #       with:
+  #         toolchain: stable
+  #     - name: cargo generate-lockfile
+  #       if: hashFiles('Cargo.lock') == ''
+  #       run: cargo generate-lockfile
+  #     - name: cargo test
+  #       run: cargo test --locked --all-features --all-targets -- --skip ui
