@@ -14,7 +14,7 @@ just a lot less configurable (and it supports Codeberg)
 To install, you need to have rust and cargo installed
 
 ```sh
-cargo install --git https://github.com/funnyboy-roks/github-notif-indicator.git
+cargo install --git https://codeberg.org/fbr/cb-gh-notif-indicator.git
 ```
 
 ## Waybar
