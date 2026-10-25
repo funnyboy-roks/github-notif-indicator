@@ -23,72 +23,72 @@ jobs:
           components: rustfmt
       - name: cargo fmt --check
         run: cargo fmt --check
-  # clippy:
-  #   runs-on: ubuntu-latest
-  #   name: ${{ matrix.toolchain }} / clippy
-  #   permissions:
-  #     contents: read
-  #     checks: write
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       # Get early warning of new lints which are regularly introduced in beta channels.
-  #       toolchain: [stable, beta]
-  #   steps:
-  #     - uses: actions/checkout@v7
-  #       with:
-  #         submodules: true
-  #     - name: Install ${{ matrix.toolchain }}
-  #       uses: dtolnay/rust-toolchain@master
-  #       with:
-  #         toolchain: ${{ matrix.toolchain }}
-  #         components: clippy
-  #     - name: cargo clippy
-  #       uses: giraffate/clippy-action@v1.0.1
-  #       with:
-  #         reporter: 'github-pr-check'
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  # hack:
-  #   # cargo-hack checks combinations of feature flags to ensure that features are all additive
-  #   # which is required for feature unification
-  #   runs-on: ubuntu-latest
-  #   name: ubuntu / stable / features
-  #   steps:
-  #     - uses: actions/checkout@v7
-  #       with:
-  #         submodules: true
-  #     - name: Install stable
-  #       uses: dtolnay/rust-toolchain@master
-  #       with:
-  #         toolchain: stable
-  #     - name: cargo install cargo-hack
-  #       uses: taiki-e/install-action@v2.85.4
-  #       with:
-  #         tool: cargo-hack
-  #     # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
-  #     # --feature-powerset runs for every combination of features
-  #     - name: cargo hack
-  #       run: cargo hack --feature-powerset check
-  # msrv:
-  #   # check that we can build using the minimal rust version that is specified by this crate
-  #   runs-on: ubuntu-latest
-  #   # we use a matrix here just because env can't be used in job names
-  #   # https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability
-  #   strategy:
-  #     matrix:
-  #       msrv: ["1.95"]
-  #   name: ubuntu / ${{ matrix.msrv }}
-  #   steps:
-  #     - uses: actions/checkout@v7
-  #       with:
-  #         submodules: true
-  #     - name: Install ${{ matrix.msrv }}
-  #       uses: dtolnay/rust-toolchain@master
-  #       with:
-  #         toolchain: ${{ matrix.msrv }}
-  #     - uses: actions/cache@v6.1.0
-  #       with:
-  #         path: ~/.cargo
-  #         key: ${{ runner.os }}-cargo
-  #     - name: cargo +${{ matrix.msrv }} check
-  #       run: cargo check
+  clippy:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.toolchain }} / clippy
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        # Get early warning of new lints which are regularly introduced in beta channels.
+        toolchain: [stable, beta]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install ${{ matrix.toolchain }}
+        uses: https://github.com/dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          components: clippy
+      - name: cargo clippy
+        uses: https://github.com/giraffate/clippy-action@v1.0.1
+        with:
+          reporter: 'github-pr-check'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  hack:
+    # cargo-hack checks combinations of feature flags to ensure that features are all additive
+    # which is required for feature unification
+    runs-on: ubuntu-latest
+    name: ubuntu / stable / features
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install stable
+        uses: https://github.com/dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: cargo install cargo-hack
+        uses: https://github.com/taiki-e/install-action@v2.85.4
+        with:
+          tool: cargo-hack
+      # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
+      # --feature-powerset runs for every combination of features
+      - name: cargo hack
+        run: cargo hack --feature-powerset check
+  msrv:
+    # check that we can build using the minimal rust version that is specified by this crate
+    runs-on: ubuntu-latest
+    # we use a matrix here just because env can't be used in job names
+    # https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability
+    strategy:
+      matrix:
+        msrv: ["1.95"]
+    name: ubuntu / ${{ matrix.msrv }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install ${{ matrix.msrv }}
+        uses: https://github.com/dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.msrv }}
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-cargo
+      - name: cargo +${{ matrix.msrv }} check
+        run: cargo check
